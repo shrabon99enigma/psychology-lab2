@@ -1,3 +1,4 @@
+import random
 import time
 import streamlit as st
 
@@ -64,24 +65,26 @@ if st.button("🚀 START SCAN"):
         "📊 Preparing Report..."
     ]
 
-    for i, step in enumerate(scan_steps):
-        status.info(step)
+    random_habits = random.sample(MOBILE_HABITS, min(20, len(MOBILE_HABITS)))
 
-        for j in range(20):
-            progress.progress(i * 20 + j + 1)
-            time.sleep(0.03)
-
+    for index, habit in enumerate(random_habits, start=1):
+      with st.container():
+        st.success(f"Finding #{index}")
+        st.write(habit)
+        time.sleep(0.8)
     status.success("✅ Scan Complete!")
 
     st.divider()
     st.header("🧠 Mobile Habit Report")
 
-    # Show all 20 habits one by one
-    for index, habit in enumerate(MOBILE_HABITS, start=1):
-        with st.container():
-            st.success(f"Finding #{index}")
-            st.write(habit)
-            time.sleep(0.8)
+    # Show 20 random habits
+    random_habits = random.sample(MOBILE_HABITS, min(20, len(MOBILE_HABITS)))
+
+    for index, habit in enumerate(random_habits, start=1):
+      with st.container():
+        st.success(f"Finding #{index}")
+        st.write(habit)
+        time.sleep(0.5)
 
     st.divider()
     st.balloons()
