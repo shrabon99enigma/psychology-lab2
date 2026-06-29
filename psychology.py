@@ -87,4 +87,4 @@ if st.button("🚀 START SCAN"):
     st.balloons()
 
     st.success("🎉 Scan Finished")
-    st.info("Result: You are officially a Normal Smartphone User 😄")g
+    st.info("Result: You are officially a Normal Smartphone User 😄")
