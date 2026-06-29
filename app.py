@@ -7,35 +7,46 @@ import streamlit as st
 from habits import MOBILE_HABITS
 from verdicts import VERDICTS
 from notes import FBI_NOTES
-
+from style import CUSTOM_CSS
 
 # ===========================
 # Page Configuration
 # ===========================
+
 st.set_page_config(
     page_title="FBI Mobile Habit Scanner",
     page_icon="🕵️",
     layout="centered"
 )
 
+st.markdown(CUSTOM_CSS, unsafe_allow_html=True)
+
 # ===========================
 # Header
 # ===========================
+
+st.markdown(
+    "<h4 style='text-align:center;color:#00ff99;'>🧠 FBI Secure Brain Connection Established</h4>",
+    unsafe_allow_html=True
+)
+
 st.title("🕵️ FBI Mobile Habit Scanner")
 st.caption("⚠️ Entertainment Only")
 
 # ===========================
 # User Input
 # ===========================
+
 name = st.text_input("Enter Your Name")
+
 if name.strip():
-    st.balloons()
     st.success(f"👋 Hi {name}! Welcome to your mind 🧠")
     st.toast("🧠 Brain connection established!")
 
 # ===========================
 # Start Scan
 # ===========================
+
 if st.button("🚀 START SCAN"):
 
     if not name.strip():
@@ -64,13 +75,11 @@ if st.button("🚀 START SCAN"):
             time.sleep(0.03)
 
     status.success("✅ Scan Complete!")
-
     # ===========================
     # FBI Case Information
     # ===========================
 
     case_id = f"FBI-{datetime.now().year}-{random.randint(100000,999999)}"
-
     scan_time = datetime.now().strftime("%d %B %Y | %I:%M %p")
 
     st.divider()
@@ -80,10 +89,33 @@ if st.button("🚀 START SCAN"):
     col1, col2 = st.columns(2)
 
     with col1:
-        st.info(f"Case ID\n\n{case_id}")
+        st.markdown(f"""
+<div style="
+background:#111827;
+padding:15px;
+border-radius:12px;
+border:1px solid #00ff99;
+color:white;
+">
+<b>🆔 Case ID</b><br><br>
+{case_id}
+</div>
+""", unsafe_allow_html=True)
 
     with col2:
-        st.info(f"Scan Time\n\n{scan_time}")
+        st.markdown(f"""
+<div style="
+background:#111827;
+padding:15px;
+border-radius:12px;
+border:1px solid #00ff99;
+color:white;
+">
+<b>🕒 Scan Time</b><br><br>
+{scan_time}
+</div>
+""", unsafe_allow_html=True)
+
     # ===========================
     # FBI Score
     # ===========================
@@ -103,15 +135,22 @@ if st.button("🚀 START SCAN"):
 
     st.progress(score)
 
-    st.metric(
-        label="Score",
-        value=f"{score}/100"
-    )
+    st.markdown(f"""
+<div style="
+background:#111827;
+border:1px solid #00ff99;
+padding:18px;
+border-radius:12px;
+text-align:center;
+color:white;
+">
+<h2>📊 FBI Score</h2>
+<h1>{score}/100</h1>
+</div>
+""", unsafe_allow_html=True)
 
     st.success(verdict)
-
     st.caption("✅ FBI Analysis Completed Successfully")
-
     # ===========================
     # Mobile Habit Report
     # ===========================
@@ -134,6 +173,7 @@ if st.button("🚀 START SCAN"):
             st.write(habit)
 
             time.sleep(0.12)
+
     # ===========================
     # FBI Secret Note
     # ===========================
@@ -144,7 +184,18 @@ if st.button("🚀 START SCAN"):
 
     note = random.choice(FBI_NOTES)
 
-    st.warning(note)
+    st.markdown(f"""
+<div style="
+background:#111827;
+border:1px solid #ffc107;
+padding:15px;
+border-radius:12px;
+color:white;
+font-size:17px;
+">
+📂 {note}
+</div>
+""", unsafe_allow_html=True)
 
     st.caption("🔒 Classified Information")
 
@@ -158,8 +209,27 @@ if st.button("🚀 START SCAN"):
 
     st.success("🎉 Scan Finished Successfully")
 
-    st.info("Result: You are officially a Normal Smartphone User 😄")
+    # ===========================
+    # Final Behavioral Analysis
+    # ===========================
 
+    if score <= 30:
+        result = "🟢 Excellent! Your mobile habits look healthy."
+
+    elif score <= 50:
+        result = "🟡 You use your phone normally, but a little extra scrolling was detected."
+
+    elif score <= 70:
+        result = "🟠 Late-night scrolling activity has been detected."
+
+    elif score <= 90:
+        result = "🔴 Heavy smartphone usage detected. Consider taking short breaks."
+
+    else:
+        result = "⚫ Extreme scrolling activity detected. The FBI is... probably just joking. 😂"
+
+    st.caption("📌 Final Behavioral Analysis")
+    st.info(result)
     # ===========================
     # Rating
     # ===========================
@@ -183,6 +253,10 @@ if st.button("🚀 START SCAN"):
 
     if st.button("Submit Feedback"):
         st.success("❤️ Thank you for your valuable feedback!")
+
+        if feedback.strip():
+            st.write("💬 Your Feedback:")
+            st.code(feedback)
 
     # ===========================
     # Buttons
