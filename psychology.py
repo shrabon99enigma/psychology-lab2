@@ -2,18 +2,18 @@ import random
 import time
 import streamlit as st
 
-# -----------------------------
+# ===========================
 # Page Configuration
-# -----------------------------
+# ===========================
 st.set_page_config(
     page_title="FBI Mobile Habit Scanner",
     page_icon="🕵️",
     layout="centered"
 )
 
-# -----------------------------
+# ===========================
 # Mobile Habits
-# -----------------------------
+# ===========================
 MOBILE_HABITS = [
     "📱 ফোন আনলক করে কী করতে এসেছিলি সেটাই ভুলে গেছিস।",
     "⏰ শুধু সময় দেখার জন্য ফোন খুলেছিলি, তারপর ২০ মিনিট স্ক্রল করেছিস।",
@@ -37,9 +37,9 @@ MOBILE_HABITS = [
     "📱 ফোনটা হাতে নিয়ে শেষ পর্যন্ত কেন হাতে নিয়েছিলি সেটাই মনে করতে পারোনি।"
 ]
 
-# -----------------------------
+# ===========================
 # UI
-# -----------------------------
+# ===========================
 st.title("🕵️ FBI Mobile Habit Scanner")
 st.caption("⚠️ Entertainment Only")
 
@@ -56,38 +56,97 @@ if st.button("🚀 START SCAN"):
     progress = st.progress(0)
     status = st.empty()
 
-    # Fake scanning
     scan_steps = [
         "🔐 Connecting to FBI Database...",
         "📱 Reading Mobile Activity...",
         "🧠 Analyzing Brain Pattern...",
         "🔍 Detecting Hidden Habits...",
-        "📊 Preparing Report..."
+        "📊 Preparing Final Report..."
     ]
 
-    random_habits = random.sample(MOBILE_HABITS, min(20, len(MOBILE_HABITS)))
+    # Fake Scanning Animation
+    for i, step in enumerate(scan_steps):
+        status.info(step)
 
-    for index, habit in enumerate(random_habits, start=1):
-      with st.container():
-        st.success(f"Finding #{index}")
-        st.write(habit)
-        time.sleep(0.8)
+        for j in range(20):
+            progress.progress(i * 20 + j + 1)
+            time.sleep(0.03)
+
     status.success("✅ Scan Complete!")
 
+    # ===========================
+    # FBI SCORE
+    # ===========================
+    score = random.randint(25, 100)
+
+    if score <= 30:
+        verdict = "🟢 Innocent Mobile User"
+
+    elif score <= 50:
+        verdict = "🟡 Casual Scroller"
+
+    elif score <= 70:
+        verdict = "🟠 Midnight Scroller"
+
+    elif score <= 90:
+        verdict = "🔴 Certified Mobile Addict"
+
+    else:
+        verdict = "⚫ FBI Wants To Talk With You 😂"
+
     st.divider()
+
+    st.subheader("📊 FBI Mobile Score")
+
+    st.progress(score)
+
+    st.metric("Score", f"{score}/100")
+
+    st.success(verdict)
+
+    # ===========================
+    # Random Habits
+    # ===========================
+    st.divider()
+
     st.header("🧠 Mobile Habit Report")
 
-    # Show 20 random habits
-    random_habits = random.sample(MOBILE_HABITS, min(20, len(MOBILE_HABITS)))
+    random_habits = random.sample(
+        MOBILE_HABITS,
+        min(len(MOBILE_HABITS), 20)
+    )
 
     for index, habit in enumerate(random_habits, start=1):
-      with st.container():
-        st.success(f"Finding #{index}")
-        st.write(habit)
-        time.sleep(0.5)
+        with st.container():
+            st.success(f"Finding #{index}")
+            st.write(habit)
+            time.sleep(0.25)
 
     st.divider()
+
     st.balloons()
 
     st.success("🎉 Scan Finished")
+
     st.info("Result: You are officially a Normal Smartphone User 😄")
+
+    # ===========================
+    # Rating
+    # ===========================
+    st.divider()
+
+    st.subheader("⭐ Rate This FBI Scanner")
+
+    rating = st.slider(
+        "Your Rating",
+        1,
+        5,
+        5
+    )
+
+    feedback = st.text_area(
+        "💬 Share your feedback (optional)"
+    )
+
+    if st.button("Submit Feedback"):
+        st.success("❤️ Thank you for your valuable feedback!")
