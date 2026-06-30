@@ -10,6 +10,134 @@ from notes import FBI_NOTES
 from style import CUSTOM_CSS
 
 # ===========================
+# FBI Boot Screen
+# ===========================
+
+def boot_screen():
+
+    boot = st.empty()
+
+    frames = [
+"""
+████████████████████████████
+
+🛰 FBI SECURE TERMINAL
+
+████████████████████████████
+""",
+"""
+████████████████████████████
+
+🛰 FBI SECURE TERMINAL
+
+Connecting...
+
+████████████████████████████
+""",
+"""
+████████████████████████████
+
+🛰 FBI SECURE TERMINAL
+
+Connecting...
+
+Authorizing...
+
+████████████████████████████
+""",
+"""
+████████████████████████████
+
+🛰 FBI SECURE TERMINAL
+
+Connecting...
+
+Authorizing...
+
+Access Granted
+
+████████████████████████████
+""",
+"""
+████████████████████████████
+
+🛰 FBI SECURE TERMINAL
+
+Connecting...
+
+Authorizing...
+
+Access Granted
+
+Welcome Agent.
+
+████████████████████████████
+"""
+    ]
+
+    for frame in frames:
+        boot.code(frame, language="text")
+        time.sleep(0.6)
+
+    time.sleep(0.4)
+
+    boot.empty()
+
+
+# ===========================
+# Hacker Typing Animation
+# ===========================
+
+def type_writer(text, speed=0.03):
+
+    placeholder = st.empty()
+
+    current = ""
+
+    for ch in text:
+        current += ch
+
+        placeholder.markdown(
+            f"<h3 style='color:#00ff99'>{current}</h3>",
+            unsafe_allow_html=True
+        )
+
+        time.sleep(speed)
+
+    return placeholder
+
+
+# ===========================
+# Hacker Terminal Animation
+# ===========================
+
+def terminal_animation():
+
+    terminal = st.empty()
+
+    logs = [
+        "💻 Initializing FBI Terminal...",
+        "🔐 Connecting to Secure Server...",
+        "🛰 Establishing Encrypted Connection...",
+        "📱 Reading Smartphone Metadata...",
+        "🧠 Analyzing Behavioral Patterns...",
+        "🔎 Detecting Digital Habits...",
+        "📊 Building Investigation Report...",
+        "✅ Access Granted."
+    ]
+
+    output = ""
+
+    for log in logs:
+
+        output += f"> {log}\n"
+
+        terminal.code(output, language="text")
+
+        time.sleep(0.55)
+
+    return terminal
+# ===========================
 # Page Configuration
 # ===========================
 
@@ -49,12 +177,16 @@ if name.strip():
 
 if st.button("🚀 START SCAN"):
 
+    boot_screen()
+
     if not name.strip():
         st.warning("⚠️ Please enter your name.")
         st.stop()
 
-    st.subheader(f"🔍 Scanning {name}'s Mobile Brain...")
-
+    
+    typing = type_writer(f"🔍 Scanning {name}'s Mobile Brain...")
+    time.sleep(0.5)
+    typing.empty()
     progress = st.progress(0)
     status = st.empty()
 
@@ -75,6 +207,12 @@ if st.button("🚀 START SCAN"):
             time.sleep(0.03)
 
     status.success("✅ Scan Complete!")
+
+    
+    terminal = terminal_animation()
+    time.sleep(0.8)
+    terminal.empty()
+
     # ===========================
     # FBI Case Information
     # ===========================
@@ -87,7 +225,6 @@ if st.button("🚀 START SCAN"):
     st.subheader("🆔 FBI Case Information")
 
     col1, col2 = st.columns(2)
-
     with col1:
         st.markdown(f"""
 <div style="
@@ -151,6 +288,7 @@ color:white;
 
     st.success(verdict)
     st.caption("✅ FBI Analysis Completed Successfully")
+
     # ===========================
     # Mobile Habit Report
     # ===========================
@@ -208,7 +346,6 @@ font-size:17px;
     st.balloons()
 
     st.success("🎉 Scan Finished Successfully")
-
     # ===========================
     # Final Behavioral Analysis
     # ===========================
@@ -230,6 +367,7 @@ font-size:17px;
 
     st.caption("📌 Final Behavioral Analysis")
     st.info(result)
+
     # ===========================
     # Rating
     # ===========================
